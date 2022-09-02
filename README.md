@@ -5,4 +5,3 @@ The system presents a competed light bulb,work washer and cool refrigerator game
 
 All images are placeholder ones and need to be replaced prior to deployment!
 
-The manual for this system can be seen in manual.md for set up process

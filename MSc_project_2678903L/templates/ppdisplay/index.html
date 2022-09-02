@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>Btest</title>
+    <style>
+    </style>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="../../static/css/Blue.css" }/>
+</head>
+
+{% load static %}
+
+<body>
+
+<div id="menuBar">
+    <button id="testBtn" onclick="connectBike(1)">Connect bike 1</button>
+    <button id="testBtn2" onclick="connectBike(2)">Connect bike 2</button>
+    <button id="hideBtn" onclick="hideMenu()">Hide Menu & Go Full Screen</button>
+    <button id="testBtn3" onclick="testConnectBtn()">Test connect</button>
+    <button id="startBtn" onclick="start()">Launch interaction menu</button>
+    <button id="DisconnectBtn" onclick="btnDisconnect(1)">Disconnect Bike 1</button>
+    <button id="DisconnectBtn" onclick="btnDisconnect(2)">Disconnect Bike 2</button>
+    <div id="ReconnectArea"></div>
+</div>
+
+<div class="splashScreenArea" id="splashScreenArea" onclick="start()">
+    <!--<img class="splashScreenImg" id="splashScreenImg" src="{% static 'images/splash1.PNG'%}"onclick="start()"/>-->
+</div>
+
+
+<div id="div test" style="display:none; font-size:0px">
+    <div id="P1">
+        <h1 id="gameTitle" style="">Select Your Game</h1>
+        <button class="game_btn" id="game1" style="backgroud: url(static/images/bulb3.jpg) no-repeat"
+                onclick="selectBikes(1)">Light Bulb
+        </button>
+        <button class="game_btn" id="game2" style="display:block" onclick="selectBikes(2)">Work Washer</button>
+        <button class="game_btn" id="game3" style="display:block" onclick="selectBikes(3)">Cool Refrigerator</button>
+    </div>
+
+    <h1 id="instrTitle" style="display: none">Select Your Bike</h1>
+
+    <button id="Btn1" style="display: inline-block" class="selectBtn">Bike One</button>
+    <button id="Btn2" style="display: inline-block" class="selectBtn">Bike Two</button>
+    <button id="Btn3" style="display: inline-block" class="selectBtn">Bike One&Two</button>
+    <div id="Content1"></div>
+
+
+</div>
+
+
+<div id="bikeInstr" style="display:none">
+    <!--        <h2>Set up the bikes to suit you</h2>-->
+    <!--        <div>-->
+    <!--            <div class="left">-->
+    <!--                <h2> Step 1:</h2>-->
+    <!--                <h3>Adjust the seat</h3>-->
+    <!--                <img src="{% static 'images/seatAdj.png'%}" class="setUpInstrImg" />-->
+
+    <!--            </div>-->
+    <!--            <div class="right">-->
+    <!--                <h2>Step 2:</h2>-->
+    <!--                <h3>Set the resistance you're comfortable with</h3>-->
+    <!--                <h3>(Has no effect on difficulty, for your comfort)</h3>-->
+    <!--                <img src="{% static 'images/resitanceImg.png'%}" class="setUpInstrImg" />-->
+    <!--            </div>-->
+    <!--        </div>-->
+
+
+    <div class="bulbrule">
+        <h1>Light Bulb</h1>
+        <div style="overflow:hidden;">
+            <div class="rule1">You have one minute.</div>
+            <div class="ruleLeft"><span class="rule2">First 30s </span><span class="rule3">- powering LED bulbs</span>
+            </div>
+            <div class="ruleLeft"><span class="rule2">Last 30s </span><span
+                    class="rule3">- powering filament bulbs</span></div>
+            <div class="rule1">How many bulbs can you light?</div>
+        </div>
+    </div>
+
+    <div>
+        <button class="selectBtn " id="start" onclick="startGame()">Start</button>
+    </div>
+
+</div>
+
+<div id="divInstr" style="display:none">
+    <div class="split left">
+        <h1>Reconnecting Bikes!</h1>
+        <h2> Step 1:</h2>
+        <h3>Start Cycling</h3>
+        <h2>Step 2:</h2>
+        <h3>Wait for the menu to open as you cycle</h3>
+        <h2>Step 3:</h2>
+        <h3>Use the tick button to select quick start</h3>
+    </div>
+    <div class="split right">
+        <img src="{% static 'images/instrImg.png' %}" class="instrImg"/>
+    </div>
+
+</div>
+
+
+<div id="bulbs" style="display: none">
+
+    <div id="bulbDescription" style="color: white;font-size:50px;font-weight: 700;"></div>
+
+    <div id="timerBg">
+        <h1 id="timer" style="color: white;"></h1>
+    </div>
+    <div id="solo" style="margin-top: 100px;display: none; text-align: left;">
+        <div style="font-size: 30px; font-weight: 700;margin-left: 40px; color: white; text-align: left;margin-left: 150px;">
+            You Have
+            powered these bulbs:
+        </div>
+        <div class="content" style="margin-left: 150px; display: inline-block;"></div>
+    </div>
+</div>
+
+</body>
+
+</html>
+<script>
+    let img = 1
+    setInterval(() => {
+        if (img === 1) {
+            console.log("sad")
+            document.getElementById("splashScreenArea").style.background = "url('{% static 'images/img1.jpg' %}') no-repeat"
+            document.getElementById("splashScreenArea").style.backgroundSize = '100% 100%'
+            img = 2
+        } else if (img === 2) {
+            document.getElementById("splashScreenArea").style.background = "url('{% static 'images/img2.jpg' %}') no-repeat"
+            document.getElementById("splashScreenArea").style.backgroundSize = '100% 100%'
+            img = 3
+        } else if (img === 3) {
+            document.getElementById("splashScreenArea").style.background = "url('{% static 'images/img2.jpg' %}') no-repeat"
+            document.getElementById("splashScreenArea").style.backgroundSize = '100% 100%'
+            img = 1
+        }
+    }, 2500)
+    // Global variables here to be used in game
+    var lvlselected = 0;
+    var noBikes = 1;
+    var modeSelected = 0;
+    var inGame = false;
+    var curBulbs = 0;
+    var bike1pwr = 0;
+    var bike2pwr = 0;
+    var timeExp;
+    var bulbPhase = 0;
+    var ledBulbs = 0;
+    var filBulbs = 0;
+    var bulbDivisor = 6;
+    var compCurBulbs = [0, 0];
+    var compLedBulbs = [0, 0];
+    var compFilBulbs = [0, 0];
+    let width = screen.width;
+    let height = screen.height;
+    var imgWidth = 0.07 * width;
+    var imgHeightPerc = imgWidth / 142;
+    var imgHeight = 0;
+    var total_power = 0;
+    var comp_total_power = [0, 0];
+
+    document.addEventListener('fullscreenchange', function () {
+        console.info("full screen change");
+
+        if (document.fullscreenElement) {
+
+            document.getElementById("menuBar").style.display = "none";
+
+        } else {
+
+            document.getElementById("menuBar").style.display = "block";
+
+        }
+    });
+    document.onfullscreenchange = fullscreenchanged;
+
+    //Class for the bikes
+    class BLEDevice {
+
+        device;
+
+        async deviceDetails(BikeNo) {
+
+            await navigator.bluetooth.requestDevice({
+                /*acceptAllDevices: true*/
+                filters: [{services: ['00001818-0000-1000-8000-00805f9b34fb']}], optionalServices: ['battery_service']
+            }).then(device => {
+                this.device = device;
+                this.device.addEventListener('gattserverdisconnected', function () {
+
+                    setTimeout(function () {
+
+                        reconnectBike(BikeNo);
+                    }, 2000);
+
+                });
+                this.startConnection(BikeNo);
+            })
+        }
+
+        async startConnection(BikeNo) {
+
+            console.info(device);
+            await this.device.gatt.connect()
+                .then(reserver => {
+                    console.info(reserver);
+                    console.info("getting service");
+                    return reserver.getPrimaryService('00001818-0000-1000-8000-00805f9b34fb');
+                }).then(service => {
+                    // Getting Characteristic…
+                    console.info(service)
+                    return service.getCharacteristic('00002a63-0000-1000-8000-00805f9b34fb');
+                }).then(characteristic => characteristic.startNotifications())
+                .then(characteristic => {
+                    // Set up event listener for when characteristic value changes.
+                    console.info("setting up listener")
+
+                    characteristic.addEventListener('characteristicvaluechanged',
+                        function () {
+                            testchange(event, BikeNo);
+                        });
+
+                    // Reading value
+                    console.info("Reading value")
+                    //return characteristic.readValue();
+                }).catch(error => {
+                    console.error(error);
+                });
+            console.info("Done");
+
+        }
+
+        async disConnectDevice() {
+
+
+            await this.device.gatt.disconnect();
+        }
+
+        connectionDetails() {
+
+
+            if (typeof (this.device) === "undefined") {
+
+                return false;
+
+            } else {
+
+                return this.device.gatt.connected;
+
+            }
+
+
+        }
+
+    }
+
+    //Global variables to store details for both bikes as objects
+    const device = new BLEDevice();
+    const device2 = new BLEDevice();
+
+    // Code for connection buttons goes here
+
+    async function connectBike(BikeNo) {
+
+        if (BikeNo === 1) {
+
+            await device.deviceDetails(BikeNo);
+            console.info(typeof device)
+            //console.info(device);
+            console.info(device.connectionDetails());
+
+        } else {
+
+            await device2.deviceDetails(BikeNo);
+            console.info(typeof device2)
+            //console.info(device);
+            console.info(device2.connectionDetails());
+
+        }
+
+        if (!document.getElementById("reconnectBike" + BikeNo.toString())) {
+
+            let btn = document.createElement("button");
+            btn.innerHTML = "Reconect Bike " + BikeNo.toString();
+            btn.type = "submit";
+            btn.name = "formBtn";
+            btn.id = "reconnectBike" + BikeNo.toString();
+            if (BikeNo === 1) {
+
+                btn.onclick = function () {
+
+                    device.startConnection(1);
+
+                };
+            } else {
+
+
+                btn.onclick = function () {
+
+                    device2.startConnection(2);
+
+                };
+
+            }
+            document.getElementById("ReconnectArea").appendChild(btn);
+        }
+
+    }
+
+    async function reconnectBike(bikeNo) {
+
+        console.info("attemptin reconnect");
+
+        if (bikeNo == 1) {
+            console.info("attempting bike 1 reconnect");
+            await device.startConnection(bikeNo);
+
+            if (!device.connectionDetails()) {
+                console.info("failed connection");
+                setTimeout(function () {
+                    reconnectBike(bikeNo);
+                }, 5000);
+
+            }
+
+        } else {
+
+            device2.startConnection(bikeNo);
+
+            if (!device2.connectionDetails()) {
+
+                setTimeout(function () {
+
+                    reconnectBike(bikeNo);
+                }, 5000);
+
+            }
+
+        }
+
+    }
+
+    async function testConnectBtn() {
+        console.info("D1");
+        console.info(device.connectionDetails());
+        console.info("D2");
+        console.info(device2.connectionDetails());
+    }
+
+    async function btnDisconnect(BikeNo) {
+
+        if (BikeNo == 1) {
+
+            await device.disConnectDevice();
+
+            console.info("disconnected bike 1");
+
+        } else {
+
+            await device2.disConnectDevice();
+
+            console.info("disconnected bike 2");
+
+        }
+        ;
+
+    }
+
+
+    function hideMenu() {
+        var elem = document.documentElement;
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.mozRequestFullScreen) { /* Firefox */
+            elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+            elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { /* IE/Edge */
+            elem = window.top.document.body; //To break out of frame in IE
+            elem.msRequestFullscreen();
+        }
+        splashScreen();
+
+    }
+
+    function fullscreenchanged(event) {
+
+        console.info("full screen change");
+
+        if (document.fullscreenElement) {
+
+            document.getElementById("menuBar").style.display = "none";
+
+        } else {
+
+            document.getElementById("menuBar").style.display = "block";
+
+        }
+    }
+
+
+
+    var testpower = 0;
+    var t = setInterval(() => {
+        if (inGame) {
+            testpower += 1.5;
+            testchange(testpower, 1);
+            testchange(testpower, 2);
+        }
+    }, 500)
+    // -----------------------------------------------------------------\
+
+
+    //Event handler for recieving gatt notifications and running of games
+    function testchange(event, bikeNo) {
+        console.info("pwr event")
+
+        //const testvalue = event.target.value.getUint8(0);
+
+
+        power = event
+
+
+        console.info('Power is ' + power);
+        if (bikeNo == 1) {
+
+            bike1pwr = power;
+
+        } else {
+
+            bike2pwr = power;
+
+        }
+        ;
+
+        if (inGame) {
+
+            //mode sected value of 1 indicates bulbs
+            if (lvlselected == 1) {
+                let timerBgStyle = document.getElementById("timerBg").style;
+                timerBgStyle.display = "block";
+                timerBgStyle.margin = "0 auto";
+                timerBgStyle.width = "400px"
+                timerBgStyle.height = "400px"
+                timerBgStyle.borderRadius = "100%"
+                timerBgStyle.background = "#b68908"
+
+                if (modeSelected == 0) {
+
+                    soloCoopBulb(power);
+                } else if (modeSelected == 1) {
+
+                    soloCoopBulb(bike2pwr);
+                } else if (modeSelected == 2) {
+
+                    compBulb(bikeNo, power);
+
+                } else if (modeSelected == 3) {
+                    coopetBulb(bikeNo, power);
+                }
+                ;
+
+                //Level selected value of 2 is toaster game
+            } else if (lvlselected == 2) {
+
+                if (modeSelected == 0) {
+
+                    soloCoopToaster(power);
+
+                } else if (modeSelected == 1) {
+
+                    soloCoopToaster(bike2pwr + bike1pwr);
+
+                } else if (modeSelected == 2) {
+
+                    compToaster(bikeNo, power);
+
+                } else if (modeSelected == 3) {
+
+                    coopetToaster(bikeNo, power);
+
+                }
+                ;
+
+            } else if (lvlselected == 3) {
+
+                if (modeSelected == 0) {
+
+                    soloCoopKettle(power);
+
+                } else if (modeSelected == 1) {
+
+                    soloCoopKettle(bike2pwr + bike1pwr);
+
+                } else if (modeSelected == 2) {
+
+                    compKettle(bikeNo, power);
+
+                } else if (modeSelected == 3) {
+
+                    coopetKettle(bikeNo, power);
+
+                }
+                ;
+
+            }
+
+
+        }
+    }
+
+
+
+    function soloCoopBulb(power) {
+        document.getElementById('solo').style.display = "block";
+
+
+        total_power += power;
+        bulbs = Math.ceil(power / bulbDivisor);
+
+        if (bulbPhase == 0) {
+
+            srcImg = "{% static 'images/LED.PNG'%}";
+
+            if (ledBulbs < bulbs) {
+                ledBulbs = bulbs;
+            }
+
+        } else {
+
+            srcImg = "{% static 'images/Filament.PNG'%}";
+
+            if (filBulbs < bulbs) {
+                filBulbs = bulbs;
+            }
+
+        }
+        ;
+
+        if (curBulbs < bulbs) {
+
+            if (bulbs > 10) {
+
+                document.getElementById("solo").style.textAlign = "center"
+                let soloct = document.getElementById("solo").getElementsByClassName('content')[0];
+
+                soloct.innerHTML = '';
+
+                let div = document.createElement('div');
+                div.id = i.toString() + "led";
+
+                let newLed = document.createElement("img");
+                newLed.src = srcImg; //修改灯泡图片
+                newLed.style.verticalAlign = "top";
+                div.appendChild(newLed);
+                
+                let number = document.createElement("div");
+                number.innerHTML = " X" + bulbs;
+                number.style.display = "inline-block";
+                number.style.fontSize = "80px"
+                number.style.color = "white"
+                number.style.margin = "0 auto"
+                number.style.lineHeight = '241px'
+                div.appendChild(number);
+
+                soloct.appendChild(div);
+
+            }
+
+            else {
+
+                for (i = curBulbs; i < bulbs; i++) {
+
+                    let newLed = document.createElement("img");
+                    newLed.id = i.toString() + "led";
+
+                    newLed.style.marginRight = "30px"
+                    console.info(newLed.id);
+                    newLed.src = srcImg;
+                    let solo = document.getElementById("solo")
+                    solo.style.textAlign = "left"
+                    solo.getElementsByClassName('content')[0].appendChild(newLed);
+                }
+            }
+
+
+            curBulbs = bulbs;
+
+        } else if (curBulbs > bulbs) {
+
+            var delBulbs = curBulbs - bulbs;
+
+            if (bulbs > 10) {
+
+                document.getElementById("solo").style.textAlign = "center"
+                let soloct = document.getElementById("solo").getElementsByClassName('content')[0];
+                soloct.innerHTML = '';
+
+                let div = document.createElement('div');
+                div.id = i.toString() + "led";
+                let newLed = document.createElement("img");
+                newLed.src = srcImg;
+                newLed.style.verticalAlign = "top";
+                div.appendChild(newLed);
+                let number = document.createElement("div");
+                number.innerHTML = " X" + bulbs;
+                number.style.display = "inline-block";
+                number.style.fontSize = "80px"
+                number.style.color = "white"
+                number.style.margin = "0 auto"
+                number.style.lineHeight = '241px'
+                div.appendChild(number);
+
+                soloct.appendChild(div);
+
+            } else {
+                for (i = 1; i <= delBulbs; i++) {
+                    console.info((curBulbs - i).toString() + "led");
+                    document.getElementById((curBulbs - i).toString() + "led").remove();
+                }
+            }
+
+            curBulbs = bulbs;
+
+        }
+        ;
+
+
+    }
+
+    // Code for games menu goes here
+
+    function splashScreen() {
+
+        document.getElementById("splashScreenArea").style.display = "block";
+        document.getElementById("splashScreenImg").width = width;
+        document.getElementById("splashScreenImg").height = height;
+        document.getElementById("div test").style.display = "none";
+        document.getElementById("bikeInstr").style.display = "none";
+
+    }
+
+    // 启动按钮
+    function start() {
+
+        document.getElementById("splashScreenArea").style.display = "none";
+        document.getElementById("bikeInstr").style.display = "none";
+
+        document.getElementById("div test").style.display = "block";
+
+        const tables = document.getElementsByClassName("Btn_table");
+
+        for (let i = 0; i < tables.length; i++) {
+
+            console.info("showing table");
+            tables[i].style.display = "block";
+
+        }
+        ;
+
+        document.getElementById("Btn1").style.display = "none";
+        document.getElementById("Btn2").style.display = "none";
+        document.getElementById("Btn3").style.display = "none";
+        //document.getElementById("Btn1").innerHTML = "1";
+        //document.getElementById("Btn2").innerHTML = "2";
+
+    }
+
+
+
+    function selectBikes(inLvl) {
+
+        document.getElementById("P1").style.display = "none";
+        const tables = document.getElementsByClassName("Btn_table");
+        console.info("test here");
+        for (let i = 0; i < tables.length; i++) {
+
+            console.info("removing table");
+            tables[i].style.display = "none";
+
+        }
+        lvlselected = inLvl;
+
+        document.getElementById("instrTitle").style.display = "block";
+        document.getElementById("bikeInstr").style.display = "none";
+        //document.getElementById("instrTitle").innerHTML = "Select Number of Bikes";
+        document.getElementById("Btn1").style.display = "inline";
+        document.getElementById("Btn2").style.display = "inline";
+        document.getElementById("Btn3").style.display = "inline";
+        document.getElementById("Btn1").classList.add("bikeBtn");
+        document.getElementById("Btn2").classList.add("bikeBtn");
+
+        //document.getElementById("Btn1").innerHTML = "1";
+        //document.getElementById("Btn2").innerHTML = "2";
+
+        document.getElementById("Btn1").onclick = function () {
+            noBikes = 1;
+            modeSelected = 0;
+            bikeSetup();
+        };
+        document.getElementById("Btn2").onclick = function () {
+            noBikes = 1;
+            modeSelected = 1;
+            bikeSetup();
+        };
+    };
+
+    function bikeSetup() {
+        document.body.style.backgroundImage = "url({% static 'images/bulb3.jpg'%})"
+        document.getElementById("instrTitle").style.display = "none";
+        document.getElementById("div test").style.display = "none";
+        document.getElementById("bikeInstr").style.display = "block";
+    }
+
+    function startGame() {
+
+        console.info("start game called");
+
+        document.getElementById("bikeInstr").style.display = "none";
+
+
+        // if (noBikes == 2 && (!device.connectionDetails() || !device2.connectionDetails())) {
+
+        //     if (!device.connectionDetails() || !device2.connectionDetails()) {
+        //         console.info("disp instr 2 bikes")
+        //         dispInstructions();
+
+        //     }
+
+        // } else if (!device.connectionDetails()) {
+        //     console.info("dispinstr 1 bike");
+        //     dispInstructions();
+
+        // } else {
+        //--------------------------------------------------------------------------------------------/
+        {
+            console.info("game started");
+            document.getElementById("div test").style.display = "none";
+            document.getElementById("divInstr").style.display = "none";
+
+            total_power = 0;
+
+            if (lvlselected === 1) {
+
+                document.getElementById("bulbs").style.display = "block";
+
+                document.getElementById("bulbDescription").style.display = "block";
+
+                document.getElementById("bulbDescription").innerHTML = "How many LED bulbs can you power for <span style='color: #ed9b14;'>30</span> seconds?";
+
+                document.getElementById("timer").innerHTML = "30s ";
+                ledBulbs = 0;
+                filBulbs = 0;
+                bulbPhase = 0;
+                bulbDivisor = 6;
+
+                timeExp = new Date(Date.now() + 30 * 1000);
+                //Level selected value of 2 is toaster game
+            } else if (lvlselected === 2) {
+
+                //todo add toaster
+
+            } else if (lvlselected === 3) {
+
+                //todo add kettle
+
+            }  //开始游戏
+            inGame = true;
+        }
+    }
+
+    function dispInstructions() {
+
+        document.getElementById("div test").style.display = "none";
+        document.getElementById("divInstr").style.display = "block";
+        document.getElementById("bikeInstr").style.display = "none";
+
+        if (noBikes === 2) {
+            if (!device.connectionDetails() || !device2.connectionDetails()) {
+                setTimeout(dispInstructions, 5000);
+            }
+        } else if (!device.connectionDetails()) {
+            setTimeout(dispInstructions, 5000);
+        } else {
+            //Will be called if correct bikes are connected
+            startGame();
+        }
+    }
+
+    // timer function
+
+    var x = setInterval(function () {
+
+        // Get today's date and time
+        var now = new Date().getTime();
+
+        // Find the distance between now and the count down date
+        var distance = timeExp - now;
+
+
+        // Time calculations for minutes and seconds
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+
+        // Display the result in the element with id="demo"
+        try {
+            document.getElementById("timer").innerHTML = seconds + "s ";
+        } catch (e) {
+
+        }
+
+        if (lvlselected === 1 && distance < 0) {
+            console.log("buldTimer")
+            bulbTimer(distance);
+        }
+
+
+    }, 1000);
+
+
+    function bulbTimer(distance) {
+
+        if (inGame && bulbPhase === 0) {
+            try {
+                document.getElementById("timerBg").style.display = "none";
+            } catch (e) {
+
+            }
+
+            if (modeSelected <= 1) {
+                soloBulbClear();
+                document.getElementById("-").innerHTML = "You managed to power " + ledBulbs + " LED bulbs, how many filament bulbs can you now power?";
+
+            } else if (modeSelected === 2) {
+
+                compBulbClear();
+
+                if (compLedBulbs[0] > compLedBulbs[1]) {
+
+                    document.getElementById("bulbDescription").innerHTML = "Player 1 is winning! They managed to power " + compLedBulbs[0] + "LED Bulbs <br> Player 2 powered " + compLedBulbs[1] + "LED Bulbs";
+
+                } else if (compLedBulbs[1] > compLedBulbs[0]) {
+
+                    document.getElementById("bulbDescription").innerHTML = "Player 1 is winning! They managed to power " + compLedBulbs[0] + "LED Bulbs <br> Player 2 powered " + compLedBulbs[1] + "LED Bulbs";
+
+                } else {
+
+                    document.getElementById("bulbDescription").innerHTML = "It's neck and neck! You both powered:" + compLedBulbs + "LED bulbs";
+
+                }
+            }
+
+            bulbPhase = 1;
+
+            timeExp = new Date(Date.now() + 5 * 1000);
+            inGame = false;
+
+        } else if (bulbPhase === 1 && distance < 0) {
+
+            timeExp = new Date(Date.now() + 30 * 1000);
+            now = new Date().getTime();
+
+            // Find the distance between now and the count down date
+            distance = timeExp - now;
+
+            // Time calculations for minutes and seconds
+            minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Display the result in the element with id="demo"
+            document.getElementById("timer").innerHTML = seconds + "s ";
+            document.getElementById("timer").style.display = "block";
+            //document.getElementById("bulbDescription").innerHTML = "How many filament bulbs can you power for 30 seconds?";
+            bulbPhase += 1;
+            inGame = true;
+            bulbDivisor = 40
+
+        } else if (inGame && bulbPhase === 2 && distance < 0) {
+            try {
+                document.getElementById("timer").innerHTML = "Time Expired";
+            } catch (e) {
+
+            }
+            if (modeSelected <= 1) {
+                soloBulbClear();
+                document.getElementById("bulbDescription").innerHTML = "You managed to power " + ledBulbs + " LED Bulbs and " + filBulbs + " filament Bulb. You generated a total of " + total_power + "W over the minute";
+
+            } else if (modeSelected === 2) {
+
+                compBulbClear();
+
+                if (comp_total_power[0] > comp_total_power[1]) {
+
+                    document.getElementById("bulbDescription").innerHTML = "Player 1 wins generating  " + comp_total_power[0] + " W over the minute! <br> Player 1 powered " + compLedBulbs[0] + "LED Bulbs and " + compFilBulbs[0] + " filament Bulbs" + "<br> Player 2 powered " + compLedBulbs[1] + "LED Bulbs and " + compFilBulbs[1] + " filament Bulbs";
+
+                } else if (comp_total_power[1] > comp_total_power[0]) {
+
+                    document.getElementById("bulbDescription").innerHTML = "Player 2 wins generating  " + comp_total_power[1] + " W over the minute! <br> Player 2 powered " + compLedBulbs[1] + "LED Bulbs and " + compFilBulbs[1] + " filament Bulbs" + "<br> Player 1 powered " + compLedBulbs[0] + "LED Bulbs and " + compFilBulbs[0] + " filament Bulbs";
+
+                } else {
+
+                    document.getElementById("bulbDescription").innerHTML = "It's a draw! You each generated  " + comp_total_power[0] + " W over the minute! <br> Player 1 powered " + compLedBulbs[0] + "LED Bulbs and " + compFilBulbs[0] + " filament Bulbs" + "<br> Player 2 powered " + compLedBulbs[1] + "LED Bulbs and " + compFilBulbs[1] + " filament Bulbs";
+
+
+                }
+
+
+            }
+
+
+            document.getElementById("timerBg").style.display = "none";
+            //document.getElementById("bulbvsTable").style.display = "none";
+            //document.getElementById("bulbFacts").style.display = "block";
+
+            if (total_power > 100) {
+
+                //document.getElementById("bulbDescription2").style.display = "block";
+
+            }
+            bulbPhase = 3;
+            inGame = false;
+            timeExp = new Date(Date.now() + 20 * 1000);
+        } else if (bulbPhase === 3 && distance < 0) {
+
+            document.getElementById("timer").style.display = "none";
+            // document.getElementById("bulbFacts").style.display = "none";
+            document.getElementById("bulbs").style.display = "none";
+            // document.getElementById("bulbDescription2").style.display = "none";
+            document.getElementById("bulbDescription").style.display = "none";
+
+            inGame = false;
+            bulbPhase = 0;
+            splashScreen();
+        }
+
+    }
+
+    function soloBulbClear() {
+        document.getElementById('solo').style.display = 'none';
+        for (i = 0; i <= curBulbs; i++) {
+            console.info(i.toString() + "led");
+            try {
+                document.getElementById(i.toString() + "led").remove();
+            } catch (e) {
+
+            }
+        }
+        ;
+
+        curBulbs = 0;
+
+    }
+</script>
+
+
+</script>

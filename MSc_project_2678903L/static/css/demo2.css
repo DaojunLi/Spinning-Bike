@@ -1,0 +1,517 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+.relative {
+    position: relative;
+}
+
+.abs {
+    position: absolute;
+    z-index: 100;
+}
+
+.baseStr {
+    top: 0;
+    left: 0;
+}
+
+.size {
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+body {
+    background: white;
+}
+
+.game-bcg {
+    background: url("../DemoTwoImage/gameindex.jpg") no-repeat 0 0;
+    background-size: 100% 100%;
+    width: 35%;
+    height: 100vh;
+    margin: 0 auto;
+}
+
+.cap {
+    text-transform: capitalize;
+}
+
+.upr {
+    text-transform: uppercase;
+}
+
+/*====================================================*/
+#top-btn {
+    width: 1000px;
+    margin: 0 auto 0px;
+}
+
+#top-btn .top-btn {
+    background: rgb(58,64,72);
+    border: none;
+    height: 150px;
+    width: 150px;
+    display: inline-block;
+    margin: 0 2px;
+    cursor: pointer;
+    border-radius: 16px;
+    color: white;
+}
+#top-btn .top-btn p{
+    font-size: 30px;
+}
+/*=================================================*/
+#poster {
+    background: url("../DemoTwoImage/img3.jpg") no-repeat;
+    background-size: 100% 100%;
+    width: 35%;
+    height: 100vh;
+    margin: 0 auto;
+}
+
+/*==============================================*/
+#choose-game {
+    display: none;
+}
+
+.game-title {
+    font: 70px Inter;
+
+    font-style: oblique;
+    text-align: center;
+    padding-top: 15%;
+    -webkit-text-stroke: 2px #C24141;
+    font-weight: 1000;
+    margin-bottom: 60px;
+}
+
+.game-text {
+    font-size: 35px;
+
+    color: white;
+    text-align: center;
+    line-height: 15vh;
+    top: 1px;
+}
+
+.difficulty {
+    font-size: 30px;
+
+    color: white;
+    text-align: center;
+    margin-top: -50px;
+}
+
+.bcg1 {
+    background: url("../DemoTwoImage/led1.jpg") no-repeat 0 0;
+    background-size: 100% 100%;
+}
+
+.bcg2 {
+    background: url("../DemoTwoImage/washer.jpg") no-repeat -2px 0;
+    background-size: 102% 100%;
+}
+
+.bcg3 {
+    background: url("../DemoTwoImage/brdge.jpg") no-repeat 0 0;
+    background-size: 100% 100%;
+}
+
+.choose-game-size {
+    width: 80%;
+    height: 15vh;
+    margin: 80px auto;
+}
+
+
+/*====================================================================*/
+#choose-bike {
+    display: none;
+}
+
+.select-bike {
+    font-size: 70px;
+
+    color: #C24141;
+    text-align: center;
+    font-style: oblique;
+    padding-top: 15%;
+    margin-bottom: 80px;
+    -webkit-text-stroke: 4px black;
+    font-weight: 1000;
+}
+
+.bike-text {
+    font-size: 50px;
+
+    color: white;
+    text-align: center;
+    line-height: 15vh;
+}
+
+
+.bike-bcg {
+    background: url("../DemoTwoImage/bike1.jpg") no-repeat 0 0;
+    background-size: 100% 100%;
+    margin: 80px auto 0;
+    width: 80%;
+    height: 15vh;
+}
+
+/*======================================================================*/
+#choose-model {
+    display: none;
+}
+
+.select-model {
+    font-size: 55px;
+
+    color: rgb(194 65 65);
+    text-align: center;
+    font-style: oblique;
+    padding-top: 15%;
+    margin-bottom: 80px;
+    -webkit-text-stroke: 3px black;
+    font-weight: 1000;
+}
+
+
+.model-text {
+    font-size: 35px;
+
+    color: white;
+    text-align: center;
+    line-height: 15vh;
+}
+
+.model-bcg1 {
+    background: url("../DemoTwoImage/bike1.jpg") no-repeat 0 0;
+    background-size: 100% 100%;
+}
+
+.model-bcg2 {
+    background: url("../DemoTwoImage/twobike1.jpg") no-repeat 0 0;
+    background-size: 100% 100%;
+}
+
+
+.model-bcg3 {
+    background: url("../DemoTwoImage/twobike2.jpg") no-repeat 0 0;
+    background-size: 100% 100%;
+}
+
+.model-bcg {
+    width: 80%;
+    height: 15vh;
+    margin: 80px auto 0;
+}
+
+.model-bcg:hover {
+    cursor: pointer;
+}
+
+/*==================================================================*/
+#game-ruler {
+    display: none;
+}
+
+.ruler-title {
+    font-size: 100px;
+
+    color: black;
+    text-align: center;
+    padding-top: 15%;
+    -webkit-text-stroke: 4px #C24141;
+    font-weight: 1000;
+    font-style: oblique;
+}
+
+.ruler-text {
+    font-size: 40px;
+
+    color: white;
+    width: 90%;
+    margin: 60px auto;
+    font-weight: 1000;
+}
+
+.ruler-start-btn {
+    font-size: 50px;
+
+    text-align: center;
+    color: white;
+    border: #C24141 solid 7px;
+    border-radius: 50px;
+    width: 25%;
+    padding: 0 30px 5px;
+    margin: 60px auto;
+    cursor: pointer;
+}
+
+.ruler-bcg {
+    background: url("../DemoTwoImage/ruler-bcg.jpg") no-repeat 55% 40%;
+    background-size: 300% 300%;
+    width: 35%;
+    height: 100vh;
+    margin: 0 auto;
+}
+
+/*==========================*/
+#game {
+    display: none;
+}
+
+.title {
+    font-size: 42px;
+
+    color: white;
+    padding-top: 10%;
+    width: 95%;
+    margin: 0 auto;
+    font-weight: 1000;
+}
+
+.game2-title {
+    font-size: 80px;
+
+    color: black;
+    -webkit-text-stroke: 4px #C24141;
+    font-weight: 1000;
+    text-align: center;
+    font-style: oblique;
+}
+
+.title3 {
+    font-size: 48px;
+
+    color: white;
+    padding-top: 10%;
+    width: 90%;
+    margin: 0 auto;
+    font-weight: 1000;
+}
+
+
+.countDown-text {
+    font-size: 32px;
+
+    color: white;
+    text-align: center;
+    line-height: 13vh;
+}
+
+.countDown-text2 {
+    font-size: 11px;
+
+    color: white;
+    text-align: center;
+}
+
+.countDown-text3 {
+    font-size: 40px;
+
+    color: white;
+    -webkit-text-stroke: 2px black;
+    text-align: center;
+    line-height: 13vh;
+    font-weight: 1000;
+}
+
+.text2 {
+    line-height: 190px;
+}
+
+.countDown {
+    margin-top: -70px;
+}
+
+.led-count {
+    font-size: 45px;
+
+    color: #FFD700;
+    font-weight: 1000;
+}
+
+#game .left {
+    float: left;
+    margin-left: 20%;
+}
+
+#game .right {
+    float: right;
+    margin-right: 20%;
+}
+
+
+.line1 {
+    border-bottom: #FFD700 solid 10px;
+    border-left: #FFD700 solid 10px;
+    border-right: #FFD700 solid 10px;
+    width: 40%;
+    height: 50px;
+    margin: 0 auto;
+}
+
+.line2 {
+    border-left: #FFD700 solid 10px;
+    width: 30px;
+    height: 50px;
+    margin-left: 50%;
+}
+
+.countdown-bcg {
+    background: url("../DemoTwoImage/led2.jpg") no-repeat 0 0;
+    background-size: 100% 100%;
+    width: 70%;
+    height: 13vh;
+    margin: 10% auto 5px;
+}
+
+.countdown-bcg2 {
+    background: url("../DemoTwoImage/washer1.jpg") no-repeat 0 0;
+    background-size: 100% 100%;
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    margin: 10% auto 5px;
+}
+
+.countdown-bcg3 {
+    background: url("../DemoTwoImage/power2.jpg") no-repeat 0 0;
+    background-size: 100% 100%;
+    width: 70%;
+    height: 13vh;
+    margin: 10% auto 5px;
+}
+
+.img {
+    width: 14%;
+    height: 10vh;
+    border: #FFD700 solid 8px;
+}
+
+.left-img {
+    background: url("../DemoTwoImage/led3.jpg") no-repeat 0 0;
+    background-size: 100% 100%;
+}
+
+.right-img {
+    background: url("../DemoTwoImage/led4.jpg") no-repeat 0 0;
+    background-size: 100% 100%;
+}
+
+.left-img2 {
+    background: url("../DemoTwoImage/left2.jpg") no-repeat 0 0;
+    background-size: 100% 100%;
+}
+
+.right-img2 {
+    background: url("../DemoTwoImage/right2.jpg") no-repeat 0 0;
+    background-size: 100% 100%;
+}
+
+.brdgesmall {
+    background: url("../DemoTwoImage/tembcg.jpg") no-repeat 0 0;
+    margin: 0 auto;
+
+    color: #FFD700;
+    font-size: 32px;
+    font-weight: 1000;
+    text-align: center;
+    line-height: 10vh;
+}
+
+.power {
+    font-size: 15px;
+
+    background: url("../DemoTwoImage/led1.jpg") no-repeat 88% 0%;
+    background-size: 100% 100%;
+    color: #FFD700;
+    text-align: center;
+    width: 65%;
+    margin: 0 auto;
+    border: #FFD700 solid 8px;
+}
+
+.power2 {
+    font-size: 15px;
+
+    background: url("../DemoTwoImage/washer2.jpg") no-repeat 0% 0%;
+    background-size: 100% 100%;
+    color: #FFD700;
+    text-align: center;
+    width: 65%;
+    margin: 0 auto;
+    border: #FFD700 solid 8px;
+}
+
+.power3 {
+    font-size: 15px;
+
+    background: url("../DemoTwoImage/power2.jpg") no-repeat 0% 0%;
+    background-size: 100% 100%;
+    color: #FFD700;
+    text-align: center;
+    width: 65%;
+    margin: 0 auto;
+    border: #FFD700 solid 8px;
+}
+
+/*======================================*/
+#result {
+    display: none;
+}
+
+.result-title {
+    font-size: 80px;
+
+    color: white;
+    font-style: oblique;
+    text-align: center;
+    padding-top: 10%;
+    -webkit-text-stroke: 4px #C24141;
+    font-weight: 1000;
+}
+
+.result-title2 {
+    font-size: 80px;
+
+    color: black;
+    font-style: oblique;
+    text-align: center;
+    padding-top: 10%;
+    -webkit-text-stroke: 4px #C24141;
+    font-weight: 1000;
+}
+
+.result-text {
+    font-size: 43px;
+
+    color: white;
+    font-weight: 1000;
+    width: 90%;
+    margin: 10% auto 40px;
+}
+
+.tips {
+    font-size: 25px;
+
+    background: url("../DemoTwoImage/global.jpg") no-repeat 0 0;
+    background-size: 100% 100%;
+    color: white;
+    width: 80%;
+    margin-left: 7%;
+    margin-top: 10%;
+    font-weight: 1000;
+}
+
+.result3bcg {
+    background: url("../DemoTwoImage/brdgerulerbcg.jpg") no-repeat 0 0;
+    background-size: 100% 100%;
+    width: 35%;
+    height: 100vh;
+    margin: 0 auto;
+}

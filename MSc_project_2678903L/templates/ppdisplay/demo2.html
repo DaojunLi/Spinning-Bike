@@ -1,0 +1,635 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo-two</title>
+    <link rel="stylesheet" href="{% static 'css/demo2.css' %}">
+</head>
+<style>
+    @font-face {
+        font-family: fontsty1;
+        src: url("{% static 'font/style1.ttf' %}") format("truetype") ;
+    }
+
+    #poster {
+    {#display: none;#}
+    }
+
+</style>
+<body>
+<div id="top-btn">
+    <button class="top-btn" onclick="connectBike(1)"><p>Connect bike 1</p></button>
+    <button class="top-btn" onclick="connectBike(2)"><p>Connect bike 2</p></button>
+    <button class="top-btn" onclick="hideMenu()"><p>&nbsp;Hide &nbsp;Menu</p></button>
+    <button class="top-btn" onclick="testConnectBtn()"><p>Test connect</p></button>
+    <button class="top-btn" onclick="btnDisconnect(1)"><p>Disconnect Bike 1</p></button>
+    <button class="top-btn" onclick="btnDisconnect(2)"><p>Disconnect Bike 2</p></button>
+    <div id="ReconnectArea"></div>
+</div>
+
+
+<div id="poster" onclick="goGameIndex()"></div>
+
+</body>
+
+<div id="choose-game" class="game-bcg">
+    <h1 class="game-title">Choose&nbsp;a&nbsp;Game</h1>
+    <div>
+        <div class=" size bcg1 choose-game-size" onclick="goBike(1)">
+            <h1 class="cap game-text">light bulb</h1>
+            <h4 class="difficulty">easy</h4>
+        </div>
+
+        <div class=" size bcg2 choose-game-size" onclick="goBike(2)">
+            <h1 class="cap game-text">work washer</h1>
+            <h4 class="difficulty">middle</h4>
+        </div>
+
+        <div class=" size bcg3 choose-game-size" onclick="goBike(3)">
+            <h1 class="cap game-text">charge refrigerator</h1>
+            <h4 class="difficulty">hard</h4>
+        </div>
+
+    </div>
+</div>
+
+
+<div id="choose-bike" class="game-bcg">
+    <h1 class="select-bike cap">select&nbsp;your&nbsp;bike</h1>
+    <div>
+        <div class="bike-bcg size" onclick="goRuler(1)">
+            <h1 class="upr bike-text">bike 1</h1>
+        </div>
+
+        <div class="bike-bcg size" onclick="goRuler(2)">
+            <h1 class="upr bike-text">bike 2</h1>
+        </div>
+
+        <div class="bike-bcg size" onclick="goModel()">
+            <h1 class="upr bike-text">bike 1&2</h1>
+        </div>
+
+    </div>
+</div>
+
+
+<div id="choose-model" class="game-bcg">
+    <h1 class="cap select-model">select game model</h1>
+    <div>
+        <div class="model-bcg model-bcg1">
+            <h1 class="model-text">Co-operate</h1>
+        </div>
+
+        <div class="model-bcg model-bcg2">
+            <h1 class="cap model-text">Competitive</h1>
+        </div>
+
+        <div class="model-bcg model-bcg3">
+            <h1 class="model-text">Co-operate&Competitive</h1>
+        </div>
+
+    </div>
+</div>
+
+
+<div id="game-ruler" class="ruler-bcg">
+    <h1 class="cap ruler-title">light bulb</h1>
+    <div class="ruler-text">
+        <p>
+            You have <span style="color: #C24141">one minute</span>to go spinning.
+        </p>
+        <p>
+            Generated electricity:
+        </p>
+        <p>
+            <span style="color: #C24141">Half</span> - powering LED bulbs.
+        </p>
+        <p>
+            <span style="color: #C24141">Half</span> - powering filament bulbs.
+        </p>
+    </div>
+    <H1 class="cap ruler-start-btn" onclick="startGame()">start</H1>
+
+</div>
+
+
+<div id="game" class="game-bcg">
+    <div id="game1" style="display: none">
+        <div class="title">
+            <p id="start_game_title">Do you want to know how many bulbs you can light?</p>
+        </div>
+
+        <div class="countdown-bcg">
+            <h1 class="cap countDown-text">remaining time: <span id="count-down">60</span>s</h1>
+        </div>
+
+        <div>
+            <div style="overflow:hidden;margin-top: 10%">
+                <span class="led-count left">X <span id="left-led">00</span></span>
+                <span class="led-count right">X <span id="right-led">00</span></span>
+            </div>
+            <div style="overflow: hidden">
+                <div class="left-img img left "></div>
+                <div class="right-img img right"></div>
+            </div>
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="power">
+                <h1>Generated energy:</h1>
+                <h1><span id="power">0</span> <span>w</span></h1>
+            </div>
+        </div>
+    </div>
+
+    <div id="game2" style="display: none">
+        <div class="title">
+            <p class="game2-title">Work Washer</p>
+        </div>
+
+        <div class="countdown-bcg2">
+            <div class="cap countDown-text2">
+                <h1 class="text2">Remaining time:</h1>
+                <h1 class="countDown"><span id="count-down2">60</span>s</h1>
+            </div>
+        </div>
+
+        <div>
+            <div style="overflow:hidden;margin-top: 7%">
+                <span class="led-count left">X <span id="left-washer">00</span></span>
+                <span class="led-count right">X <span id="right-washer">00</span></span>
+            </div>
+            <div style="overflow: hidden">
+                <div class="left-img2 img left "></div>
+                <div class="right-img2 img right"></div>
+            </div>
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="power2">
+                <h1>Generated energy:</h1>
+                <h1><span id="power2">0</span> <span>w</span></h1>
+            </div>
+        </div>
+    </div>
+
+    <div id="game3" style="display: none">
+        <div class="title3">
+            <p>How many degrees can you lower the refrigerator?</p>
+        </div>
+
+        <div class="countdown-bcg3">
+            <h1 class="cap countDown-text3">remaining time: <span id="count-down3">60</span>s</h1>
+        </div>
+
+        <div>
+            <div style="overflow: hidden;margin-top: 10%">
+                <div class="left-img img brdgesmall">
+                    <span>
+                        <span id="temperature">0</span>℃
+                    </span>
+                </div>
+            </div>
+            <div class="line2"></div>
+            <div class="power3">
+                <h1>Generated energy:</h1>
+                <h1><span id="power3">0</span> <span>w</span></h1>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div id="result">
+    <div id="result1" style="display: none" class="game-bcg">
+        <h1 class="cap result-title">game result</h1>
+        <div class="result-text">
+            <p>You have cycled for 58s and generated <span id="total_power">0</span> W, which can power <span
+                    id="led1">0</span> LED bulbs and <span id="led2">0</span> filament bulbs.</p>
+        </div>
+        <div class="tips">
+            <p>Tips:</p>
+            <p>The power consumption of filament</p>
+            <p>bulbs is six times that of LED bulbs.</p>
+            <p>Please use LED instead offilament</p>
+            <p>bulbs to provide aforce for saving</p>
+            <p>resources.</p>
+        </div>
+    </div>
+
+    <div id="result2" style="display: none" class="game-bcg">
+        <h1 class="cap result-title">game result</h1>
+        <div class="result-text">
+            <p>You have generated <span id="total_power2">0</span> W, which can make energy-saving
+                washer run for <span
+                        id="washer1" style="color: #C24141">0</span>s and traditional washer run for<span id="washer2" style="color: #C24141">0</span>s.</p>
+        </div>
+        <div class="tips">
+            <p>Tips:</p>
+            <p>The average power consumption of</p>
+            <p>traditional washer is twice that of</p>
+            <p>energy-saving washer. Please wash</p>
+            <p>by hand or use energy-saving washer</p>
+            <p>instead of traditional washer to </p>
+            <p>provide a force for saving resources.</p>
+        </div>
+    </div>
+
+    <div id="result3" style="display:none;" class="result3bcg">
+        <h1 class="cap result-title">game result</h1>
+        <div class="result-text">
+            <p>You have generated <span id="total_power3">0</span> W, which can reduce the temperature of the
+                refrigerator to<span id="tem">0</span>℃.</p>
+        </div>
+        <div class="tips">
+            <p>Tips:</p>
+            <p>Dont`t underestimate the power consumption of
+                the refrigerator,the following three points can help save energy:
+            </p>
+            <p>1.Reducing the time of opening and closing the refrigerator door.</p>
+            <p>2.Adjusting the refrigerate temperature according to the seasonal temperature.</p>
+            <p>3. Regular defrosting.</p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    let start = 1
+    const img = setInterval(() => {
+        if (start === 1) {
+            document.getElementById("poster").style.background = "url('{% static 'DemoTwoImage/img1.jpg' %}') no-repeat"
+            document.getElementById("poster").style.backgroundSize = '100% 100%'
+            start = 2
+        } else if (start === 2) {
+            document.getElementById("poster").style.background = "url('{% static 'DemoTwoImage/img2.jpg' %}') no-repeat"
+            document.getElementById("poster").style.backgroundSize = '100% 100%'
+            start = 3
+        } else if (start === 3) {
+            document.getElementById("poster").style.background = "url('{% static 'DemoTwoImage/img3.jpg' %}') no-repeat"
+            document.getElementById("poster").style.backgroundSize = '100% 100%'
+            start = 4
+        } else if (start === 4) {
+            document.getElementById("poster").style.background = "url('{% static 'DemoTwoImage/img4.jpg' %}') no-repeat"
+            document.getElementById("poster").style.backgroundSize = '100% 100%'
+            start = 1
+        }
+    }, 2500)
+    {#  =================================================================  #}
+
+    //Class for the bikes
+    class BLEDevice {
+
+        device;
+
+        async deviceDetails(BikeNo) {
+            await navigator.bluetooth.requestDevice({
+                /*acceptAllDevices: true*/
+                filters: [{services: ['00001818-0000-1000-8000-00805f9b34fb']}], optionalServices: ['battery_service']
+            }).then(device => {
+                this.device = device;
+                this.device.addEventListener('gattserverdisconnected', function () {
+                    setTimeout(function () {
+                        reconnectBike(BikeNo);
+                    }, 2000);
+                });
+                this.startConnection(BikeNo);
+            })
+        }
+
+        async startConnection(BikeNo) {
+            await this.device.gatt.connect().then(reserver => {
+                return reserver.getPrimaryService('00001818-0000-1000-8000-00805f9b34fb');
+            }).then(service => {
+                return service.getCharacteristic('00002a63-0000-1000-8000-00805f9b34fb');
+            }).then(characteristic => characteristic.startNotifications()).then(characteristic => {
+                // Set up event listener for when characteristic value changes.
+                characteristic.addEventListener('characteristicvaluechanged',
+                    function () {
+                        lightLed(event, BikeNo);
+                    });
+                // Reading value
+                console.info("Reading value")
+                //return characteristic.readValue();
+            }).catch(error => {
+                console.error(error);
+            });
+            console.info("Done");
+        }
+
+
+        async disConnectDevice() {
+            await this.device.gatt.disconnect();
+        }
+
+        connectionDetails() {
+            if (typeof (this.device) === "undefined") {
+                return false;
+            } else {
+                return this.device.gatt.connected;
+            }
+        }
+
+    }
+
+    let device1 = new BLEDevice()
+    let device2 = new BLEDevice()
+
+
+    async function connectBike(BikeNo) {
+        if (BikeNo === 1) {
+            await device1.deviceDetails(BikeNo);
+            console.info(typeof device1)
+            //console.info(device);
+            console.info(device1.connectionDetails());
+        } else {
+            await device2.deviceDetails(BikeNo);
+            console.info(typeof device2)
+            //console.info(device);
+            console.info(device2.connectionDetails());
+        }
+        if (!document.getElementById("reconnectBike" + BikeNo.toString())) {
+            let btn = document.createElement("button");
+            btn.innerHTML = "Reconect Bike " + BikeNo.toString();
+            btn.type = "submit";
+            btn.name = "formBtn";
+            btn.id = "reconnectBike" + BikeNo.toString();
+            if (BikeNo === 1) {
+                btn.onclick = function () {
+                    device.startConnection(1);
+                };
+            } else {
+                btn.onclick = function () {
+                    device2.startConnection(2);
+                };
+            }
+            document.getElementById("ReconnectArea").appendChild(btn);
+        }
+    }
+
+    async function reconnectBike(bikeNo) {
+
+        console.info("attemptin reconnect");
+
+        if (bikeNo === 1) {
+            console.info("attempting bike 1 reconnect");
+            await device1.startConnection(bikeNo);
+
+            if (!device1.connectionDetails()) {
+                console.info("failed connection");
+                setTimeout(function () {
+                    reconnectBike(bikeNo);
+                }, 5000);
+
+            }
+
+        } else {
+
+            device2.startConnection(bikeNo);
+
+            if (!device2.connectionDetails()) {
+
+                setTimeout(function () {
+
+                    reconnectBike(bikeNo);
+                }, 5000);
+
+            }
+
+        }
+
+    }
+
+
+    async function testConnectBtn() {
+        console.info("D1");
+        console.info(device1.connectionDetails());
+        console.info("D2");
+        console.info(device2.connectionDetails());
+    }
+
+    async function btnDisconnect(BikeNo) {
+
+        if (BikeNo === 1) {
+
+            await device1.disConnectDevice();
+
+            console.info("disconnected bike 1");
+
+        } else {
+
+            await device2.disConnectDevice();
+
+            console.info("disconnected bike 2");
+
+        }
+
+    }
+
+
+    function hideMenu() {
+        var elem = document.documentElement;
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.mozRequestFullScreen) { /* Firefox */
+            elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+            elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) { /* IE/Edge */
+            elem = window.top.document.body; //To break out of frame in IE
+            elem.msRequestFullscreen();
+        }
+    }
+
+    document.addEventListener('fullscreenchange', function () {
+        console.info("full screen change");
+        if (document.fullscreenElement) {
+            document.getElementById("top-btn").style.display = "none";
+        } else {
+            document.getElementById("top-btn").style.display = "block";
+        }
+    });
+    document.onfullscreenchange = fullscreenchanged;
+
+    function fullscreenchanged(event) {
+        console.info("full screen change");
+        if (document.fullscreenElement) {
+            document.getElementById("top-btn").style.display = "none";
+        } else {
+            document.getElementById("top-btn").style.display = "block";
+        }
+    }
+
+    {#  =================================================================================  #}
+    let game = 1
+
+
+    function goGameIndex() {
+        clearInterval(img)
+        document.getElementById("poster").style.display = "none";
+        document.getElementById("choose-game").style.display = "block";
+    }
+
+
+    function goBike(num) {
+        game = num
+        document.getElementById("choose-game").style.display = "none";
+        document.getElementById("choose-bike").style.display = "block";
+    }
+
+
+    function goModel() {
+        document.getElementById("choose-bike").style.display = "none";
+        document.getElementById("choose-model").style.display = "block";
+    }
+
+
+    function goRuler() {
+        if (game === 1) {
+            time = 60
+        } else if (game === 2) {
+            time = 60
+            document.getElementById("game-ruler").style.background = " url({% static 'DemoTwoImage/washer1.jpg' %}) no-repeat 35% 48%"
+            document.getElementById("game-ruler").style.backgroundSize = "300% 300%"
+            document.getElementsByClassName("ruler-title")[0].innerHTML = "work washer"
+            document.getElementsByClassName("ruler-title")[0].style.fontSize = "90px"
+            document.getElementsByClassName("ruler-text")[0].innerHTML = "You have <span style='color: #C24141'>one minute</span> to go spinning. <p>Generated electricity:</p> <p> <span style='color: #C24141'>Half</span> - working energy-saving washer.</p> <p><span style='color: #C24141'>Half</span> - working traditional washer.</p>"
+            document.getElementsByClassName("ruler-text")[0].style.fontSize = "35px"
+        } else if (game === 3) {
+            time = 60
+            document.getElementById("game-ruler").style.background = " url({% static 'DemoTwoImage/brdgerulerbcg.jpg' %}) no-repeat 0% 0%"
+            document.getElementById("game-ruler").style.backgroundSize = "100% 100%"
+            document.getElementsByClassName("ruler-title")[0].innerHTML = "cool refrigerator"
+            document.getElementsByClassName("ruler-title")[0].style.fontSize = "67px"
+            document.getElementsByClassName("ruler-text")[0].innerHTML = "Total Time:<span style='color: #C24141'>One minute</span> The original temperature of refrigerator is <span style='color: #C24141'>0 ℃</span>. You need to ride exercise bike to generate energy to cool refrigerator."
+            document.getElementsByClassName("ruler-text")[0].style.fontSize = "45px"
+        }
+        document.getElementById("choose-bike").style.display = "none";
+        document.getElementById("game-ruler").style.display = "block";
+    }
+
+    {# ================================================================================ #}
+    let power = 0;
+    let time = 60;
+    let bike1pwr = 0
+    let bike2pwr = 0
+    const leftLed = 6
+    const rightLed = 36
+    const leftwash = 6
+    const righwash = 12
+    const brdge = 10
+    let leftLedCount = 0
+    let rightLedCount = 0
+    let tem = 0
+    let isGame = false
+
+    {#function lightLeddown() {#}
+    {#    let protectPower = setInterval(() => {#}
+    {#        power += 2;#}
+    {#        console.log(power)#}
+    {#        lightLed(3, 1)#}
+    {#        if (time <= 0) {#}
+    {#            clearInterval(protectPower)#}
+    {#        }#}
+    {#    }, 500)#}
+    //}
+
+
+    function lightLed(event, bikeNo) {
+        let testValue = event.target.value.getUint8(0);
+
+        if (isGame) {
+            if (bikeNo === 1) {
+                bike1pwr = event
+                {#bike1pwr = testValue#}
+
+                power += bike1pwr
+            } else if (bikeNo === 2) {
+                bike1pwr = event
+                {#bike2pwr = testValue#}
+
+                power += bike2pwr
+            }
+            console.log(power)
+            if (game === 1) {
+                leftLedCount = Math.round(power / 2 / leftLed)
+                rightLedCount = Math.round(power / 2 / rightLed)
+                document.getElementById("power").innerHTML = Math.round(power)
+                document.getElementById("left-led").innerHTML = leftLedCount > 10 ? leftLedCount : "0" + leftLedCount
+                document.getElementById("right-led").innerHTML = rightLedCount > 10 ? rightLedCount : "0" + rightLedCount
+            } else if (game === 2) {
+                leftLedCount = Math.round(power / 2 / leftwash)
+                rightLedCount = Math.round(power / 2 / righwash)
+                document.getElementById("power2").innerHTML = Math.round(power)
+                document.getElementById("left-washer").innerHTML = leftLedCount > 10 ? leftLedCount : "0" + leftLedCount
+                document.getElementById("right-washer").innerHTML = rightLedCount > 10 ? rightLedCount : "0" + rightLedCount
+            } else if (game === 3) {
+                tem = 0 - Math.round(power / brdge)
+                document.getElementById("power3").innerHTML = Math.round(power)
+                document.getElementById("temperature").innerHTML = tem
+            }
+        }
+    }
+
+
+    function countDown() {
+        let CountDown = setInterval(() => {
+            time -= 1
+            if (game === 1) {
+                document.getElementById("count-down").innerHTML = time;
+                document.getElementById("power").innerHTML = Math.round(power);
+            } else if (game === 2) {
+                document.getElementById("count-down2").innerHTML = time;
+                document.getElementById("power2").innerHTML = Math.round(power);
+
+            } else if (game === 3) {
+                document.getElementById("count-down3").innerHTML = time;
+                document.getElementById("power3").innerHTML = Math.round(power);
+
+            }
+
+            if (time <= 0) {
+                clearInterval(CountDown)
+                document.getElementById("game").style.display = "none";
+                document.getElementById("result").style.display = "block";
+                if (game === 1) {
+                    document.getElementById("result1").style.display = "block";
+                    document.getElementById("led1").innerHTML = leftLedCount;
+                    document.getElementById("led2").innerHTML = rightLedCount;
+                    document.getElementById("total_power").innerHTML = Math.round(power);
+                } else if (game === 2) {
+                    document.getElementById("result2").style.display = "block";
+                    document.getElementById("washer1").innerHTML = leftLedCount;
+                    document.getElementById("washer2").innerHTML = rightLedCount;
+                    document.getElementById("total_power2").innerHTML = Math.round(power);
+                } else if (game === 3) {
+                    document.getElementById("result3").style.display = "block";
+                    document.getElementById("tem").innerHTML = tem;
+                    document.getElementById("total_power3").innerHTML = Math.round(power);
+                }
+
+            }
+        }, 1000)
+    }
+
+
+    function startGame() {
+        document.getElementById("game-ruler").style.display = "none";
+        document.getElementById("game").style.display = "block";
+        if (game === 1) {
+            document.getElementById("game1").style.display = "block";
+        } else if (game === 2) {
+            document.getElementById("game2").style.display = "block";
+        } else if (game === 3) {
+            document.getElementById("game3").style.display = "block";
+        }
+        isGame = true
+
+        {#lightLeddown()#}
+
+        countDown()
+    }
+
+
+</script>
+</html>
